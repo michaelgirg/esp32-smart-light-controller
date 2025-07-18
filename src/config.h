@@ -2,7 +2,8 @@
 #define WIFI_PASSWORD "your_wifi_password"
 
 #define MQTT_BROKER "mqtt_broker_address"
-#define MQTT_PORT 1883 //reccomend to use 8883 which will require setup for certificate
+#define MQTT_PORT 1883 
+//reccomend to use 8883 which will require setup for certificate
 //This port will allow for secure connection to the broker
 #define MQTT_USER "mqtt_username"
 #define MQTT_PASSWORD "mqtt_password"
