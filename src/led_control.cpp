@@ -11,11 +11,11 @@ void setupLED() {
     ledcAttachPin(LED_PIN, LED_CHANNEL);
 }
 
-void setBrightness(uint8_t brightness) {
+void setBrightness(int brightness) {
     ledcWrite(LED_CHANNEL, brightness);
 }
 
-void setColor(uint8_t r, uint8_t g, uint8_t b) {
+void setColor(int r, int g, int b) {
     // Assuming RGB LED is connected with common anode
     setBrightness(r);
     delay(10);
