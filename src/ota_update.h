@@ -5,7 +5,7 @@
 #include <WiFi.h>
 #include <ArduinoOTA.h>
 
-void initOTA(const char* hostname);
+void initOTA();
 void handleOTA();
 
 #endif // OTA_UPDATE_H

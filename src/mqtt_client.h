@@ -6,14 +6,15 @@
 #include <PubSubClient.h>
 #include "config.h"
 
-// MQTT topics
-const char* const MQTT_TOPIC_SET = "home/light1/set";
-const char* const MQTT_TOPIC_STATE = "home/light1/state";
+// MQTT topics (use config.h definitions)
+#define MQTT_TOPIC_SET LIGHT_CONTROL_TOPIC
+#define MQTT_TOPIC_STATE LIGHT_STATE_TOPIC
 
 // Function declarations
-void mqttConnect();
-void mqttSubscribe();
-void mqttPublishState(const String& state, int brightness, int r, int g, int b);
+void setupMqtt();
+void mqttLoop();
+void publishLightState(const String& state, int brightness, const String& colorJson);
 void mqttCallback(char* topic, byte* payload, unsigned int length);
+void handleMqttMessage(const char* topic, const String& message);
 
 #endif // MQTT_CLIENT_H

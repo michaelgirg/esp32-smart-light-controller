@@ -7,24 +7,23 @@
 #include "ota_update.h"
 #include "sensor.h"
 
-WiFiClient espClient;
-PubSubClient mqttClient(espClient);
+// Forward declarations for local functions used before definition
+void connectToWiFi();
+void pollSensors();
 
 void setup() {
     Serial.begin(115200);
     connectToWiFi();
-    mqttClient.setServer(MQTT_BROKER, MQTT_PORT);
-    mqttClient.setCallback(mqttCallback);
-    ArduinoOTA.begin();
-    initSensors();
-    initLED();
+    initOTA();
+    setupMqtt();
+    setupLED();
+    initSensor();
+    pinMode(SENSOR_PIN, INPUT);
+    setAutoMode(AUTO_MODE);
 }
 
 void loop() {
-    if (!mqttClient.connected()) {
-        reconnectMQTT();
-    }
-    mqttClient.loop();
+    mqttLoop();
     handleOTA();
     pollSensors();
 }
@@ -38,14 +37,16 @@ void connectToWiFi() {
     Serial.println("Connected to WiFi");
 }
 
-void mqttCallback(char* topic, byte* payload, unsigned int length) {
-    handleMQTTMessage(topic, payload, length);
-}
-
-void handleOTA() {
-    ArduinoOTA.handle();
-}
-
 void pollSensors() {
-    // Implement sensor polling logic here
+    if (isAutoMode()) {
+        float lux = readLightLevel();
+        // Simple threshold-based control; tune as needed
+        if (lux < 50.0f) {
+            turnOn();
+        } else {
+            turnOff();
+        }
+        // Optional: motion-triggered on
+        checkMotionSensor(SENSOR_PIN, [](){ turnOn(); });
+    }
 }

@@ -2,7 +2,6 @@
 #include <Arduino.h>
 #include <driver/ledc.h>
 
-#define LED_PIN 23 // Define the LED pin
 #define LED_CHANNEL 0 // Define the LED channel
 #define LED_FREQUENCY 5000 // Define the LED frequency
 #define LED_RESOLUTION LEDC_TIMER_8_BIT // Define the LED resolution
